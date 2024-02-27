@@ -11,14 +11,11 @@ class Team:
 
     @classmethod
     def create_table(cls):
-        """ Create a new table to persist the attributes of Employee instances """
+        """ Create a new table to persist the attributes of Team instances """
         sql = """
-            CREATE TABLE IF NOT EXISTS employees (
+            CREATE TABLE IF NOT EXISTS teams (
             id INTEGER PRIMARY KEY,
-            name TEXT,
-            job_title TEXT,
-            department_id INTEGER,
-            FOREIGN KEY (department_id) REFERENCES departments(id))
+            name TEXT
         """
         CURSOR.execute(sql)
         CONN.commit()

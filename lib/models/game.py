@@ -1,7 +1,9 @@
+from models.__init__ import CURSOR, CONN
+
 class Game:
 
     all = []
-    
+
     def __init__(self, home_team_id, away_team_id):
         self.home_team = home_team_id
         self.away_team = away_team_id
@@ -20,6 +22,25 @@ class Game:
             self.tournament_id = tournament_id
         else:
             raise TypeError("Tournament IDs must be of type int.")
+        
+    @classmethod
+    def create_table(cls):
+        """ Create a new table to persist the attributes of Game instances """
+        sql = """
+            CREATE TABLE IF NOT EXISTS games (
+            id INTEGER PRIMARY KEY,
+            home_team INTEGER, 
+            away_team INTEGER,
+            tournament_id INTEGER,
+            home_score INTEGER,
+            away_score INTEGER,
+            FOREIGN KEY (home_team) REFERENCES teams(id)
+            FOREIGN KEY (away_team) REFERENCES teams(id)
+            FOREIGN KEY (tournament_id) REFERENCES tournaments(id)
+            )
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
 
     # home team property
     @property
