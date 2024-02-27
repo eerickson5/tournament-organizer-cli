@@ -7,7 +7,6 @@ class Team:
 
     def __init__(self, name):
         self.name = name
-        self.all.append(self)
 
     @classmethod
     def create_table(cls):
@@ -28,12 +27,29 @@ class Team:
         CURSOR.execute(sql)
         CONN.commit()
 
+    @classmethod
+    def create_team(cls, name):
+        team = cls(name)
+        team.save()
+        return team
+
     def save(self):
         sql = """
-        INSERT INTO teams(name)
+        INSERT INTO teams (name)
         VALUES (?)
         """
-        CURSOR.execute(sql, (self.name))
+        CURSOR.execute(sql, (self.name,))
         CONN.commit()
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+
+    @property
+    def name(self):
+        return self._name
+    
+    @name.setter
+    def name(self, name):
+        if type(name) == str and len(name) > 0:
+            self._name = name
+        else:
+            raise TypeError("Team name must be a nonempty string.")

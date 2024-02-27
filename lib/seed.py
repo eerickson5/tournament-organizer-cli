@@ -12,6 +12,9 @@ def seed_database():
     Game.create_table()
     Tournament.drop_table()
     Tournament.create_table()
+
+    Team.create_team("Magma")
+    Team.create_team("Tech Wreck")
     #create sample data
 
 seed_database()
