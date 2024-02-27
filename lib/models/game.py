@@ -1,4 +1,5 @@
 from models.__init__ import CURSOR, CONN
+from models.tournament import Tournament
 
 class Game:
 
@@ -64,6 +65,18 @@ class Game:
         CONN.commit()
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+
+    def add_to_tournament(self, tournament):
+        if type(tournament) == int and Tournament.find_by_id(tournament):
+            self.tournament_id = tournament
+            sql = """
+                UPDATE games SET tournament_id = ?
+                WHERE id = ?
+            """
+            CURSOR.execute(sql, (self.tournament_id, self.id))
+            CONN.commit()
+        else:
+            raise AttributeError("No tournament exists with that ID. Tournament ID should be an int.")
 
     # home team property
     @property

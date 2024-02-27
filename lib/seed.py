@@ -17,6 +17,7 @@ def seed_database():
     wreck = Team.create_team("Tech Wreck")
     scrimmage = Game.create_game(magma.id, wreck.id)
     tournament = Tournament.create_tournament("Round Robin")
+    scrimmage.add_to_tournament(tournament.id)
     #create sample data
 
 seed_database()

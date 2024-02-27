@@ -43,6 +43,26 @@ class Tournament:
         tournament = cls(name)
         tournament.save()
         return tournament
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        tournament = cls.all[row[0]]
+        if tournament:
+            tournament.name = row[1]
+        else:
+            tournament = cls(row[1])
+            tournament.id = row[0]
+            cls.all[tournament.id] = tournament
+        return tournament
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+            SELECT * FROM tournaments
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row)
 
     def save(self):
         sql = """
