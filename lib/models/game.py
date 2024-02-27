@@ -8,13 +8,6 @@ class Game:
     def __init__(self, home_team_id, away_team_id):
         self.home_team = home_team_id
         self.away_team = away_team_id
-
-    def add_score(self, home_score, away_score):
-        if type(home_score) == int and type(away_score == int):
-            self.home_score = home_score
-            self.away_score = away_score
-        else:
-            raise TypeError("Scores must be submitted as ints.")
         
     def add_to_bracket(self, tournament_id):
         # and there exists a tournament with that id
@@ -78,6 +71,18 @@ class Game:
         else:
             raise AttributeError("No tournament exists with that ID. Tournament ID should be an int.")
 
+    def add_scores(self, home_score, away_score):
+        self.home_score = home_score
+        self.away_score = away_score
+        sql = """
+            UPDATE games
+            SET home_score = ?, away_score = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.home_score, self.away_score, self.id))
+        CONN.commit()
+
+
     # home team property
     @property
     def home_team(self):
@@ -102,3 +107,25 @@ class Game:
             self._away_team = away_team_id
         else:
             raise TypeError("Team IDs must be type int.")
+        
+    @property
+    def home_score(self):
+        return self._home_score
+    
+    @home_score.setter
+    def home_score(self, score):
+        if type(score) == int and score >= 0:
+            self._home_score = score
+        else:
+            raise AttributeError("Scores must be non-negative integers.")
+        
+    @property
+    def away_score(self):
+        return self._away_score
+    
+    @away_score.setter
+    def away_score(self, score):
+        if type(score) == int and score >= 0:
+            self._away_score = score
+        else:
+            raise AttributeError("Scores must be non-negative integers.")
