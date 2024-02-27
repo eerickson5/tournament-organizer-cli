@@ -3,7 +3,7 @@ from models.game import Game
 
 class Team:
 
-    all = []
+    all = {}
 
     def __init__(self, name):
         self.name = name
@@ -11,11 +11,29 @@ class Team:
 
     @classmethod
     def create_table(cls):
-        """ Create a new table to persist the attributes of Team instances """
         sql = """
             CREATE TABLE IF NOT EXISTS teams (
             id INTEGER PRIMARY KEY,
             name TEXT
+            )
         """
         CURSOR.execute(sql)
         CONN.commit()
+
+    @classmethod
+    def drop_table(cls):
+        sql = """
+        DROP TABLE IF EXISTS teams
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+
+    def save(self):
+        sql = """
+        INSERT INTO teams(name)
+        VALUES (?)
+        """
+        CURSOR.execute(sql, (self.name))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self

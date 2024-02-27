@@ -42,6 +42,14 @@ class Game:
         CURSOR.execute(sql)
         CONN.commit()
 
+    @classmethod
+    def drop_table(cls):
+        sql = """
+        DROP TABLE IF EXISTS games
+        """
+        CURSOR.execute(sql)
+        CONN.commit()
+
     # home team property
     @property
     def home_team(self):
