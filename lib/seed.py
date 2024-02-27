@@ -13,8 +13,9 @@ def seed_database():
     Tournament.drop_table()
     Tournament.create_table()
 
-    Team.create_team("Magma")
-    Team.create_team("Tech Wreck")
+    magma = Team.create_team("Magma")
+    wreck = Team.create_team("Tech Wreck")
+    scrimmage = Game.create_game(magma.id, wreck.id)
     #create sample data
 
 seed_database()

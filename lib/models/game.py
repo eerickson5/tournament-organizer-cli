@@ -2,12 +2,11 @@ from models.__init__ import CURSOR, CONN
 
 class Game:
 
-    all = []
+    all = {}
 
     def __init__(self, home_team_id, away_team_id):
         self.home_team = home_team_id
         self.away_team = away_team_id
-        self.all.append(self)
 
     def add_score(self, home_score, away_score):
         if type(home_score) == int and type(away_score == int):
@@ -49,6 +48,22 @@ class Game:
         """
         CURSOR.execute(sql)
         CONN.commit()
+
+    @classmethod
+    def create_game(cls, home_team_id, away_team_id):
+        game = cls(home_team_id, away_team_id)
+        game.save()
+        return game
+
+    def save(self):
+        sql = """
+            INSERT INTO games (home_team, away_team)
+            VALUES (?, ?)
+        """
+        CURSOR.execute(sql, (self.home_team, self.away_team))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
 
     # home team property
     @property
