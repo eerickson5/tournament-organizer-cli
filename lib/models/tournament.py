@@ -2,11 +2,10 @@ from models.__init__ import CURSOR, CONN
 
 class Tournament:
 
-    all = []
+    all = {}
 
     def __init__(self, name):
         self.name = name
-        self.all.append(self)
 
     @property
     def name(self):
@@ -38,3 +37,20 @@ class Tournament:
         """
         CURSOR.execute(sql)
         CONN.commit()
+
+    @classmethod
+    def create_tournament(cls, name):
+        tournament = cls(name)
+        tournament.save()
+        return tournament
+
+    def save(self):
+        sql = """
+        INSERT INTO tournaments (name)
+        VALUES (?)
+        """
+        CURSOR.execute(sql, (self.name,))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
+    
