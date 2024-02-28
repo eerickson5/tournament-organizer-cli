@@ -58,6 +58,16 @@ class Game:
         CONN.commit()
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+    
+    def delete_game(self):
+        sql = """
+        DELETE FROM games
+        WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+        del type(self).all[self.id]
+        self.id = None
 
     def add_to_tournament(self, tournament):
         if type(tournament) == int and Tournament.find_by_id(tournament):
