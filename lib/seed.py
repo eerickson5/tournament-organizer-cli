@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 from models.team import Team
 from models.game import Game
 from models.tournament import Tournament
@@ -24,4 +23,5 @@ def seed_database():
     
 
 seed_database()
+print(Team.display_all_teams())
 print("Database seeded.")
