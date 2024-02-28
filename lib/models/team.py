@@ -60,6 +60,18 @@ class Team:
         """
         rows = CURSOR.execute(sql, (f"%{name}%",)).fetchall()
         return [cls.instance_from_row(row) for row in rows]
+    
+    @classmethod
+    def teams_by_tournament(cls, tournament_id):
+        games = Game.games_by_tournament(tournament_id)
+        teams = []
+        for game in games:
+            if game.home_team not in teams:
+                teams.append(game.home_team)
+            if game.away_team not in teams:
+                teams.append(game.away_team)
+        return [cls.find_by_id(team) for team in teams]
+
         
 
     @classmethod
