@@ -16,16 +16,23 @@ def seed_database():
     ozone = Team.create_team("Ozone")
     emory = Team.create_team("Emory Luna")
     wreck = Team.create_team("Tech Wreck")
+
     tournament = Tournament.create_tournament("Round Robin")
+
     scrimmage = Game.create_game(magma.id, ozone.id)
     scrimmage.add_scores(15, 12)
     scrimmage.add_to_tournament(tournament.id)
+
     derby = Game.create_game(wreck.id, emory.id)
     derby.add_scores(15, 3)
     derby.add_to_tournament(tournament.id)
 
+    my_teams_scrim = Game.create_game(magma.id, wreck.id)
+    my_teams_scrim.add_scores(14, 12)
+    my_teams_scrim.add_to_tournament(tournament.id)
+
 def current_test():
-    print(Team.teams_by_tournament(1))
+    print(Game.games_won_by_team(1))
     
 
 seed_database()

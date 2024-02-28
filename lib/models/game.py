@@ -20,13 +20,6 @@ class Game:
         except AttributeError:
             string += ")"
         return string
-    
-    def add_to_bracket(self, tournament_id):
-        # and there exists a tournament with that id
-        if type(tournament_id) == int:
-            self.tournament_id = tournament_id
-        else:
-            raise TypeError("Tournament IDs must be of type int.")
         
     @classmethod
     def create_table(cls):
@@ -101,11 +94,38 @@ class Game:
         rows = CURSOR.execute(sql, (tournament_id,)).fetchall()
         return [cls.instance_from_row(row) for row in rows]
     
+    @classmethod
+    def games_by_team(cls, team_id):
+        sql = """
+        SELECT * FROM games
+        WHERE home_team = ?
+        OR away_team = ?
+        """
+        rows = CURSOR.execute(sql, (team_id, team_id)).fetchall()
+        return[cls.instance_from_row(row) for row in rows]
+    
+    @classmethod
+    def games_won_by_team(cls, team_id):
+        games = cls.games_by_team(team_id)
+        games_won = []
+        for game in games:
+            if game.winner() == team_id:
+                games_won.append(game)
+        return games_won
+
     def teams(self):
         return (self.home_team, self.away_team)
     
     def score(self):
         return(self.home_score, self.away_score)
+    
+    def winner(self):
+        if self.home_score > self.away_score:
+            return self.home_team
+        elif self.away_score > self.home_score:
+            return self.away_team
+        else: 
+            return None
 
     def save(self):
         sql = """
