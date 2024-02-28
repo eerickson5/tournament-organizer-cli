@@ -107,6 +107,16 @@ class Game:
         return [Tournament.find_by_id(tournament) for tournament in tournaments]
             
     @classmethod
+    def games_between_teams(cls, team_1, team_2):
+        sql = """
+        SELECT * FROM games
+        WHERE (home_team = ? AND away_team = ?)
+        OR (away_team = ? AND home_team = ?)
+        """
+        rows = CURSOR.execute(sql, (team_1, team_2, team_1, team_2)).fetchall()
+        return [cls.instance_from_row(row) for row in rows]
+
+    @classmethod
     def games_by_team(cls, team_id):
         sql = """
         SELECT * FROM games
