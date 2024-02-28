@@ -5,10 +5,22 @@ class Game:
 
     all = {}
 
-    def __init__(self, home_team_id, away_team_id):
+    def __init__(self, home_team_id, away_team_id, tournament_id = None):
         self.home_team = home_team_id
         self.away_team = away_team_id
-        
+        if tournament_id:
+            self.tournament_id = tournament_id
+
+    def __repr__(self):
+        string = f"Game(id={self.id}, home_team={self.home_team}, away_team={self.away_team}" 
+        if self.away_score and self.home_score:
+            string += f", home_score={self.home_score}, away_score={self.away_score}"
+        try:
+            string += f", tournament_id={self.tournament_id})"
+        except AttributeError:
+            string += ")"
+        return string
+    
     def add_to_bracket(self, tournament_id):
         # and there exists a tournament with that id
         if type(tournament_id) == int:
@@ -44,10 +56,29 @@ class Game:
         CONN.commit()
 
     @classmethod
-    def create_game(cls, home_team_id, away_team_id):
-        game = cls(home_team_id, away_team_id)
+    def create_game(cls, home_team_id, away_team_id, tournament_id = None):
+        game = cls(home_team_id, away_team_id, tournament_id)
         game.save()
         return game
+    
+    @classmethod
+    def instance_from_row(cls, row):
+        game = cls(row[1], row[2], row[3])
+        game.id = row[0]
+        if row[4] and row[5]:
+            game.home_score = row[4]
+            game.away_score = row[5]
+        cls.all[game.id] = game
+        return game
+
+    
+    @classmethod
+    def display_all_games(cls):
+        sql = """
+        SELECT * FROM games
+        """
+        rows = CURSOR.execute(sql).fetchall()
+        return [cls.instance_from_row(row) for row in rows]
 
     def save(self):
         sql = """
@@ -121,7 +152,10 @@ class Game:
         
     @property
     def home_score(self):
-        return self._home_score
+        try:
+            return self._home_score
+        except AttributeError:
+            return None
     
     @home_score.setter
     def home_score(self, score):
@@ -132,7 +166,10 @@ class Game:
         
     @property
     def away_score(self):
-        return self._away_score
+        try:
+            return self._away_score
+        except AttributeError:
+            return None
     
     @away_score.setter
     def away_score(self, score):
