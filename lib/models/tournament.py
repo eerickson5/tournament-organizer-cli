@@ -48,7 +48,7 @@ class Tournament:
         return tournament
     
     @classmethod
-    def instance_from_db(cls, row):
+    def instance_from_row(cls, row):
         tournament = cls.all[row[0]]
         if tournament:
             tournament.name = row[1]
@@ -64,7 +64,7 @@ class Tournament:
         SELECT * FROM tournaments
         """
         rows = CURSOR.execute(sql).fetchall()
-        return [cls.instance_from_db(row) for row in rows]
+        return [cls.instance_from_row(row) for row in rows]
     
     @classmethod
     def find_by_id(cls, id):
@@ -73,7 +73,16 @@ class Tournament:
             WHERE id = ?
         """
         row = CURSOR.execute(sql, (id,)).fetchone()
-        return cls.instance_from_db(row)
+        return cls.instance_from_row(row)
+    
+    @classmethod
+    def find_by_name(cls, name):
+        sql = """
+        SELECT * FROM tournaments
+        WHERE name LIKE ?
+        """
+        rows = CURSOR.execute(sql, (f"%{name}%",))
+        return [cls.instance_from_row(row) for row in rows]
 
     def save(self):
         sql = """
