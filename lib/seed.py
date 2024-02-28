@@ -17,11 +17,11 @@ def seed_database():
     ozone = Team.create_team("Ozone")
     other = Team.create_team("Wreck")
     tournament = Tournament.create_tournament("Round Robin")
-    scrimmage = Game.create_game(magma.id, wreck.id, tournament.id)
+    scrimmage = Game.create_game(magma.id, wreck.id)
+    scrimmage.add_to_tournament(tournament.id)
     scrimmage.add_scores(15, 12)
-    #create sample data
+    print(tournament.all_games_as_rows())
     
 
 seed_database()
 print("Database seeded.")
-print(Game.find_by_id(4))

@@ -92,6 +92,21 @@ class Game:
         else:
             print("No game exists with that ID.")
 
+    @classmethod
+    def games_by_tournament(cls, tournament_id):
+        sql = """
+        SELECT * from games
+        WHERE tournament_id = ?
+        """
+        rows = CURSOR.execute(sql, (tournament_id,)).fetchall()
+        return [cls.instance_from_row(row) for row in rows]
+    
+    def teams(self):
+        return (self.home_team, self.away_team)
+    
+    def score(self):
+        return(self.home_score, self.away_score)
+
     def save(self):
         sql = """
             INSERT INTO games (home_team, away_team)
@@ -135,7 +150,6 @@ class Game:
         """
         CURSOR.execute(sql, (self.home_score, self.away_score, self.id))
         CONN.commit()
-
 
     # home team property
     @property

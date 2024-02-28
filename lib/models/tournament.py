@@ -84,6 +84,7 @@ class Tournament:
         rows = CURSOR.execute(sql, (f"%{name}%",))
         return [cls.instance_from_row(row) for row in rows]
 
+
     def save(self):
         sql = """
         INSERT INTO tournaments (name)
