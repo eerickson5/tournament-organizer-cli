@@ -33,7 +33,7 @@ def seed_database():
 
 def current_test():
     
-    print(Game.games_between_teams(1, 4))
+    print(Game.away_games_by_team(4))
     
 
 seed_database()

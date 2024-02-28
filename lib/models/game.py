@@ -127,6 +127,24 @@ class Game:
         return[cls.instance_from_row(row) for row in rows]
     
     @classmethod
+    def home_games_by_team(cls, team_id):
+        sql = """
+        SELECT * FROM games
+        WHERE home_team = ?
+        """
+        rows = CURSOR.execute(sql, (team_id,)).fetchall()
+        return [cls.instance_from_row(row) for row in rows]
+    
+    @classmethod
+    def away_games_by_team(cls, team_id):
+        sql = """
+        SELECT * FROM games
+        WHERE away_team = ?
+        """
+        rows = CURSOR.execute(sql, (team_id,)).fetchall()
+        return [cls.instance_from_row(row) for row in rows]
+
+    @classmethod
     def games_won_by_team(cls, team_id):
         games = cls.games_by_team(team_id)
         games_won = []
