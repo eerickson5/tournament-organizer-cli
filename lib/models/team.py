@@ -43,7 +43,25 @@ class Team:
         cls.all[team.id] = team
         return team
 
+    @classmethod
+    def find_by_id(cls,id):
+        sql = """
+        SELECT * FROM teams
+        WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_row(row)
     
+    @classmethod
+    def find_by_name(cls,name):
+        sql = """
+        SELECT * FROM teams
+        WHERE name LIKE ?
+        """
+        rows = CURSOR.execute(sql, (f"%{name}%",)).fetchall()
+        return [cls.instance_from_row(row) for row in rows]
+        
+
     @classmethod
     def display_all_teams(cls):
         sql = """
