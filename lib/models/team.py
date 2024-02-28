@@ -43,6 +43,16 @@ class Team:
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
 
+    def delete_team(self):
+        sql = """
+        DELETE FROM teams
+        WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+        del type(self).all[self.id]
+        self.id = None
+
     @property
     def name(self):
         return self._name
