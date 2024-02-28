@@ -70,6 +70,7 @@ class Game:
         self.id = None
 
     def add_to_tournament(self, tournament):
+        #and not already in a tournment ?
         if type(tournament) == int and Tournament.find_by_id(tournament):
             self.tournament_id = tournament
             sql = """

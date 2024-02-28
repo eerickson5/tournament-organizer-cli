@@ -73,4 +73,14 @@ class Tournament:
         CONN.commit()
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+
+    def delete_tournament(self):
+        sql = """
+        DELETE FROM tournaments
+        WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+        del type(self).all[self.id]
+        self.id = None
     
