@@ -79,6 +79,18 @@ class Game:
         """
         rows = CURSOR.execute(sql).fetchall()
         return [cls.instance_from_row(row) for row in rows]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+        SELECT * FROM games
+        WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        if row:
+            return cls.instance_from_row(row)
+        else:
+            print("No game exists with that ID.")
 
     def save(self):
         sql = """

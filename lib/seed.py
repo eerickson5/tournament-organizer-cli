@@ -24,4 +24,4 @@ def seed_database():
 
 seed_database()
 print("Database seeded.")
-print(Team.find_by_name("Wreck"))
+print(Game.find_by_id(4))
