@@ -7,6 +7,9 @@ class Tournament:
     def __init__(self, name):
         self.name = name
 
+    def __repr__(self):
+        return f"Tournament:(id={self.id}, name={self.name})"
+
     @property
     def name(self):
         return self._name
@@ -54,6 +57,14 @@ class Tournament:
             tournament.id = row[0]
             cls.all[tournament.id] = tournament
         return tournament
+
+    @classmethod
+    def display_all_tournaments(cls):
+        sql = """
+        SELECT * FROM tournaments
+        """
+        rows = CURSOR.execute(sql).fetchall()
+        return [cls.instance_from_db(row) for row in rows]
     
     @classmethod
     def find_by_id(cls, id):
