@@ -32,6 +32,7 @@ def seed_database():
     my_teams_scrim.add_to_tournament(tournament.id)
 
 def current_test():
+    
     print(Game.games_won_by_team(1))
     
 

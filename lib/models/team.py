@@ -62,7 +62,7 @@ class Team:
         return [cls.instance_from_row(row) for row in rows]
     
     @classmethod
-    def teams_by_tournament(cls, tournament_id):
+    def teams_at_tournament(cls, tournament_id):
         games = Game.games_by_tournament(tournament_id)
         teams = []
         for game in games:
@@ -71,8 +71,6 @@ class Team:
             if game.away_team not in teams:
                 teams.append(game.away_team)
         return [cls.find_by_id(team) for team in teams]
-
-        
 
     @classmethod
     def display_all_teams(cls):
@@ -83,6 +81,7 @@ class Team:
         rows = CURSOR.execute(sql).fetchall()
 
         return [cls.instance_from_row(row) for row in rows]
+
 
     def save(self):
         sql = """

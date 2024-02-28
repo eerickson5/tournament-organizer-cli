@@ -94,6 +94,18 @@ class Game:
         rows = CURSOR.execute(sql, (tournament_id,)).fetchall()
         return [cls.instance_from_row(row) for row in rows]
     
+
+    @classmethod
+    def tournaments_played_by_team(cls, team_id):
+        games = cls.games_by_team(team_id)
+        tournaments = []
+
+        for game in games:
+            if game.tournament_id not in tournaments:
+                tournaments.append(game.tournament_id)
+                
+        return [Tournament.find_by_id(tournament) for tournament in tournaments]
+            
     @classmethod
     def games_by_team(cls, team_id):
         sql = """
