@@ -27,12 +27,17 @@ def team_explorer():
     print("2. Search Team(s) by Name")
     print("3. Get Games Played by a Team")
     print("4. Get Games Won by a Team")
-    print("5. Get Tournaments Played by a Team")
+    print("5. Get Home Games by a Team")
+    print("6. Get Away Games by a Team")
+    print("7. Get Tournaments Played by a Team")
     menu = {
         "0": go_back,
         "1": get_team_from_id,
         "2": get_teams_from_name,
-        "3": get_games_from_team_id
+        "3": get_games_from_team_id,
+        "4": get_games_won_from_team_id,
+        "5": get_home_games_from_team_id,
+        "6": get_away_games_from_team_id,
     }
     choice = input("> ")
     function = menu.get(choice)
@@ -75,6 +80,33 @@ def get_games_from_team_id():
     id = input("ID of Team > ")
     team = validate_team_from_id(id)
     print(f"... Success! {Game.games_by_team(team.id)}")
+
+def get_games_won_from_team_id():
+    id = input("ID of Team > ") 
+    team = validate_team_from_id(id)
+    games = Game.games_won_by_team(team.id)
+    if games:       
+        print(f"... Success! {games}")
+    else:
+        print(f"This team has not won any games.")
+
+def get_away_games_from_team_id():
+    id = input("ID of Team > ") 
+    team = validate_team_from_id(id)
+    games = Game.away_games_by_team(team.id)
+    if games:       
+        print(f"... Success! {games}")
+    else:
+        print(f"This team has not played any away games.")
+
+def get_home_games_from_team_id():
+    id = input("ID of Team > ") 
+    team = validate_team_from_id(id)
+    games = Game.home_games_by_team(team.id)
+    if games:       
+        print(f"... Success! {games}")
+    else:
+        print(f"This team has not played any home games.")
 
 def validate_team_from_id(id):
     team = Team.find_by_id(id)
