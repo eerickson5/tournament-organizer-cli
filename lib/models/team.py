@@ -50,7 +50,8 @@ class Team:
         WHERE id = ?
         """
         row = CURSOR.execute(sql, (id,)).fetchone()
-        return cls.instance_from_row(row)
+        if row:
+            return cls.instance_from_row(row)
     
     @classmethod
     def find_by_name(cls,name):
@@ -84,14 +85,23 @@ class Team:
 
 
     def save(self):
-        sql = """
-        INSERT INTO teams (name)
-        VALUES (?)
-        """
-        CURSOR.execute(sql, (self.name,))
-        CONN.commit()
-        self.id = CURSOR.lastrowid
-        type(self).all[self.id] = self
+        if self.id and type(self).find_by_id(self.id):
+            sql = """
+            UPDATE teams
+            SET name = ?
+            WHERE ID = ?
+            """
+            CURSOR.execute(sql, (self.name, self.id))
+            CONN.commit()
+        else:
+            sql = """
+            INSERT INTO teams (name)
+            VALUES (?)
+            """
+            CURSOR.execute(sql, (self.name,))
+            CONN.commit()
+            self.id = CURSOR.lastrowid
+            type(self).all[self.id] = self
 
     def delete_team(self):
         sql = """

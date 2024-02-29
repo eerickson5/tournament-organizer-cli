@@ -1,28 +1,31 @@
 # lib/cli.py
+import fire
+from team_helpers import team_menu
 
 from helpers import (
-    exit_program,
-    helper_1
+    exit_program
 )
-
 
 def main():
     while True:
-        menu()
+        print_menu()
+        menu = {
+            "0": exit_program,
+            "1": team_menu
+        }
         choice = input("> ")
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
-            helper_1()
+        function = menu.get(choice)
+        if choice:
+            function()
         else:
-            print("Invalid choice")
+            print("Invalid Option")
 
 
-def menu():
-    print("Please select an option:")
+def print_menu():
+    print("=== Main Menu ===")
     print("0. Exit the program")
-    print("1. Some useful function")
+    print("1. Create / Modify a Team")
 
 
 if __name__ == "__main__":
-    main()
+    fire.Fire(main)

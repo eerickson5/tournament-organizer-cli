@@ -1,7 +1,8 @@
 # lib/helpers.py
+from models.team import Team
 
-def helper_1():
-    print("Performing useful function#1.")
+def go_back():
+    print("...")
 
 
 def exit_program():
