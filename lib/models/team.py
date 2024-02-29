@@ -60,7 +60,8 @@ class Team:
         WHERE name LIKE ?
         """
         rows = CURSOR.execute(sql, (f"%{name}%",)).fetchall()
-        return [cls.instance_from_row(row) for row in rows]
+        if rows:
+            return [cls.instance_from_row(row) for row in rows]
     
     @classmethod
     def teams_at_tournament(cls, tournament_id):

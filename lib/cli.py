@@ -24,7 +24,7 @@ def main():
 def print_menu():
     print("=== Main Menu ===")
     print("0. Exit the program")
-    print("1. Create / Modify a Team")
+    print("1. Create / Modify / Find a Team")
 
 
 if __name__ == "__main__":
