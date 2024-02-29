@@ -1,6 +1,6 @@
 # lib/cli.py
 import fire
-from team_helpers import team_menu
+from team_helpers import team_editor_menu, team_explorer
 
 from helpers import (
     exit_program
@@ -11,7 +11,8 @@ def main():
         print_menu()
         menu = {
             "0": exit_program,
-            "1": team_menu
+            "1": team_editor_menu,
+            "2": team_explorer
         }
         choice = input("> ")
         function = menu.get(choice)
@@ -22,9 +23,10 @@ def main():
 
 
 def print_menu():
-    print("=== Main Menu ===")
+    print("===== Main Menu =====")
     print("0. Exit the program")
-    print("1. Create / Modify / Find a Team")
+    print("1. Create / Modify a Team")
+    print("2. Find / Learn About a Team")
 
 
 if __name__ == "__main__":
