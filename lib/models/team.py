@@ -9,7 +9,8 @@ class Team:
         self.name = name
 
     def __repr__(self):
-        return f"Team(id={self.id}, name={self.name})"
+        # return f"Team(id={self.id}, name={self.name})"
+        return f"\nTeam({self.id}) {self.name}\n"
 
     @classmethod
     def create_table(cls):
