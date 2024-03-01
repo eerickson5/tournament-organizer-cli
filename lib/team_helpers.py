@@ -82,7 +82,8 @@ def get_games_from_team_id():
 def get_games_won_from_team_id():
     team = validate_team_id()
     games = Game.games_won_by_team(team.id)
-    if games:       
+    if games:    
+        print(f"-- {len(games)} games won:")   
         print(f"Games Won: {games}")
     else:
         print(f"This team has not won any games.")
@@ -91,6 +92,7 @@ def get_away_games_from_team_id():
     team = validate_team_id()
     games = Game.away_games_by_team(team.id)
     if games:       
+        print(f"-- {len(games)} away games played:")  
         print(f"Away Games: {games}")
     else:
         print(f"This team has not played any away games.")
@@ -99,6 +101,7 @@ def get_home_games_from_team_id():
     team = validate_team_id()
     games = Game.home_games_by_team(team.id)
     if games:       
+        print(f"-- {len(games)} home games played:")  
         print(f"Home Games {games}")
     else:
         print(f"This team has not played any home games.")
