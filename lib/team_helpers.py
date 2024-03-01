@@ -65,9 +65,8 @@ def rename_team():
             print("... Failed. Invalid Team Name.")
 
 def get_team_from_id():
-    id = input("ID to Search > ")
-    if team := validate_team_from_id(id):
-        print(f"... Team Found: {team}")
+    team = validate_team_id()
+    print(f"... Team Found: {team}")
 
 def get_teams_from_name():
     name = input("Name to Search > ")
@@ -77,13 +76,11 @@ def get_teams_from_name():
         print(f"... No teams with name {name} exist.")
 
 def get_games_from_team_id():
-    id = input("ID of Team > ")
-    team = validate_team_from_id(id)
+    team = validate_team_id()
     print(f"Games Played: {Game.games_by_team(team.id)}")
 
 def get_games_won_from_team_id():
-    id = input("ID of Team > ") 
-    team = validate_team_from_id(id)
+    team = validate_team_id()
     games = Game.games_won_by_team(team.id)
     if games:       
         print(f"Games Won: {games}")
@@ -91,8 +88,7 @@ def get_games_won_from_team_id():
         print(f"This team has not won any games.")
 
 def get_away_games_from_team_id():
-    id = input("ID of Team > ") 
-    team = validate_team_from_id(id)
+    team = validate_team_id()
     games = Game.away_games_by_team(team.id)
     if games:       
         print(f"Away Games: {games}")
@@ -100,15 +96,20 @@ def get_away_games_from_team_id():
         print(f"This team has not played any away games.")
 
 def get_home_games_from_team_id():
-    id = input("ID of Team > ") 
-    team = validate_team_from_id(id)
+    team = validate_team_id()
     games = Game.home_games_by_team(team.id)
     if games:       
         print(f"Home Games {games}")
     else:
         print(f"This team has not played any home games.")
 
-def validate_team_from_id(id):
+# def get_tournaments_from_team_id():
+#     id = input("ID of Team > ")
+#     team = validate_team_from_id
+#     games
+
+def validate_team_id():
+    id = input("ID of Team > ")
     team = Team.find_by_id(id)
     while not team:
         id = input("Invalid ID. Try again or input 0 to exit > ")

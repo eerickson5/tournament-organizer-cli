@@ -22,7 +22,7 @@ class Game:
     #     return string
     
     def __repr__(self):
-        string = f"\nGame ID: {self.id})\n"
+        string = f"\nGame ID: ({self.id})\n"
         if self.home_score:
             string += f"Home:({self.home_team}) {self.home_score} vs Away:({self.away_team}) {self.away_score}\n"
         else:
