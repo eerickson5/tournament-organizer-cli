@@ -111,18 +111,6 @@ class Team:
                 tournaments.append(game.tournament_id)
                 
         return [Tournament.find_by_id(tournament) for tournament in tournaments]
-        
-    
-    @classmethod
-    def teams_at_tournament(cls, tournament_id):
-        games = Game.games_by_tournament(tournament_id)
-        teams = []
-        for game in games:
-            if game.home_team not in teams:
-                teams.append(game.home_team)
-            if game.away_team not in teams:
-                teams.append(game.away_team)
-        return [cls.find_by_id(team) for team in teams]
 
     @classmethod
     def display_all_teams(cls):

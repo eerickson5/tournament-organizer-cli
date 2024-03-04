@@ -95,15 +95,6 @@ class Game:
             return cls.instance_from_row(row)
         else:
             print("No game exists with that ID.")
-
-    @classmethod
-    def games_by_tournament(cls, tournament_id):
-        sql = """
-        SELECT * from games
-        WHERE tournament_id = ?
-        """
-        rows = CURSOR.execute(sql, (tournament_id,)).fetchall()
-        return [cls.instance_from_row(row) for row in rows]
             
     @classmethod
     def games_between_teams(cls, team_1, team_2):
@@ -128,6 +119,10 @@ class Game:
             return self.away_team
         else: 
             return None
+
+    def tournament(self):
+        from models.tournament import Tournament
+        return Tournament.find_by_id(self.tournament_id)
 
     def save(self):
         sql = """

@@ -85,6 +85,26 @@ class Tournament:
         rows = CURSOR.execute(sql, (f"%{name}%",))
         return [cls.instance_from_row(row) for row in rows]
 
+    def games(self):
+        from models.game import Game
+        sql = """
+        SELECT * from games
+        WHERE tournament_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Game.instance_from_row(row) for row in rows]
+
+    def teams(self):
+        from models.team import Team
+        games = self.games
+        teams = []
+        for game in games:
+            if game.home_team not in teams:
+                teams.append(game.home_team)
+            if game.away_team not in teams:
+                teams.append(game.away_team)
+
+        return [Team.find_by_id(team) for team in teams]
 
     def save(self):
         sql = """
