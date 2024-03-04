@@ -124,15 +124,16 @@ class Team:
 
 
     def save(self):
-        if self.id and type(self).find_by_id(self.id):
-            sql = """
-            UPDATE teams
-            SET name = ?
-            WHERE ID = ?
-            """
-            CURSOR.execute(sql, (self.name, self.id))
-            CONN.commit()
-        else:
+        try:
+            if self.id and type(self).find_by_id(self.id):
+                sql = """
+                UPDATE teams
+                SET name = ?
+                WHERE ID = ?
+                """
+                CURSOR.execute(sql, (self.name, self.id))
+                CONN.commit()
+        except:
             sql = """
             INSERT INTO teams (name)
             VALUES (?)

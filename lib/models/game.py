@@ -10,26 +10,15 @@ class Game:
         if tournament_id:
             self.tournament_id = tournament_id
 
-    # def __repr__(self):
-    #     string = f"Game(id={self.id}, home_team={self.home_team}, away_team={self.away_team}" 
-    #     if self.away_score and self.home_score:
-    #         string += f", home_score={self.home_score}, away_score={self.away_score}"
-    #     try:
-    #         string += f", tournament_id={self.tournament_id})"
-    #     except AttributeError:
-    #         string += ")"
-    #     return string
     
-    def __repr__(self):
-        string = f"\nGame ID: ({self.id})\n"
+    def toString(self):
+        from models.team import Team
+        home_team = Team.find_by_id(self.home_team)
+        away_team = Team.find_by_id(self.away_team)
         if self.home_score:
-            string += f"Home:({self.home_team}) {self.home_score} vs Away:({self.away_team}) {self.away_score}\n"
+            return(f"{home_team.name} {self.home_score} vs {self.away_score} {away_team.name} \n")
         else:
-            string += f"Home:({self.home_team}) vs Away:({self.away_team})\n"
-
-        if self.tournament_id:
-            string += f"in tournament: {self.tournament_id}\n"
-        return string
+            return(f"{self.home_team.name} vs {self.away_team.name}\n")
         
     @classmethod
     def create_table(cls):

@@ -18,6 +18,7 @@ def seed_database():
     wreck = Team.create_team("Tech Wreck")
 
     tournament = Tournament.create_tournament("Round Robin")
+    other_tourn = Tournament.create_tournament("Round Circle")
 
     scrimmage = Game.create_game(magma.id, ozone.id)
     scrimmage.add_scores(15, 12)
@@ -30,12 +31,7 @@ def seed_database():
     my_teams_scrim = Game.create_game(magma.id, wreck.id)
     my_teams_scrim.add_scores(14, 12)
     my_teams_scrim.add_to_tournament(tournament.id)
-
-def current_test():
-    
-    print(Game.away_games_by_team(4))
     
 
 seed_database()
 print("Database seeded.")
-current_test()

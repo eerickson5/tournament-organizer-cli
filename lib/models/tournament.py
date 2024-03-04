@@ -92,7 +92,7 @@ class Tournament:
 
     def teams(self):
         from models.team import Team
-        games = self.games
+        games = self.games()
         teams = []
         for game in games:
             if game.home_team not in teams:
