@@ -7,10 +7,6 @@ class Tournament:
     def __init__(self, name):
         self.name = name
 
-    #get rid of this
-    def __repr__(self):
-        return f"Tournament:(id={self.id}, name={self.name})"
-
     @property
     def name(self):
         return self._name
@@ -50,17 +46,17 @@ class Tournament:
     
     @classmethod
     def instance_from_row(cls, row):
-        tournament = cls.all[row[0]]
-        if tournament:
+        try:
+            tournament = cls.all[row[0]]
             tournament.name = row[1]
-        else:
+        except:
             tournament = cls(row[1])
             tournament.id = row[0]
             cls.all[tournament.id] = tournament
         return tournament
 
     @classmethod
-    def display_all_tournaments(cls):
+    def all_tournaments(cls):
         sql = """
         SELECT * FROM tournaments
         """
