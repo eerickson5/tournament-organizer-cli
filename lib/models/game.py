@@ -1,5 +1,4 @@
 from models.__init__ import CURSOR, CONN
-from models.tournament import Tournament
 
 class Game:
 
@@ -146,6 +145,7 @@ class Game:
 
     def add_to_tournament(self, tournament):
         #and not already in a tournment ?
+        from models.tournament import Tournament
         if type(tournament) == int and Tournament.find_by_id(tournament):
             self.tournament_id = tournament
             sql = """

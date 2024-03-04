@@ -1,5 +1,5 @@
 from models.__init__ import CURSOR, CONN
-from models.game import Game
+
 
 class Team:
 

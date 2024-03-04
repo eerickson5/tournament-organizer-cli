@@ -125,4 +125,3 @@ class Tournament:
         CONN.commit()
         del type(self).all[self.id]
         self.id = None
-    
