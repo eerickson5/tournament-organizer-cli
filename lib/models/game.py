@@ -104,18 +104,6 @@ class Game:
         """
         rows = CURSOR.execute(sql, (tournament_id,)).fetchall()
         return [cls.instance_from_row(row) for row in rows]
-    
-
-    @classmethod
-    def tournaments_played_by_team(cls, team_id):
-        games = cls.games_by_team(team_id)
-        tournaments = []
-
-        for game in games:
-            if game.tournament_id not in tournaments:
-                tournaments.append(game.tournament_id)
-                
-        return [Tournament.find_by_id(tournament) for tournament in tournaments]
             
     @classmethod
     def games_between_teams(cls, team_1, team_2):
@@ -126,43 +114,6 @@ class Game:
         """
         rows = CURSOR.execute(sql, (team_1, team_2, team_1, team_2)).fetchall()
         return [cls.instance_from_row(row) for row in rows]
-
-    @classmethod
-    def games_by_team(cls, team_id):
-        sql = """
-        SELECT * FROM games
-        WHERE home_team = ?
-        OR away_team = ?
-        """
-        rows = CURSOR.execute(sql, (team_id, team_id)).fetchall()
-        return[cls.instance_from_row(row) for row in rows]
-    
-    @classmethod
-    def home_games_by_team(cls, team_id):
-        sql = """
-        SELECT * FROM games
-        WHERE home_team = ?
-        """
-        rows = CURSOR.execute(sql, (team_id,)).fetchall()
-        return [cls.instance_from_row(row) for row in rows]
-    
-    @classmethod
-    def away_games_by_team(cls, team_id):
-        sql = """
-        SELECT * FROM games
-        WHERE away_team = ?
-        """
-        rows = CURSOR.execute(sql, (team_id,)).fetchall()
-        return [cls.instance_from_row(row) for row in rows]
-
-    @classmethod
-    def games_won_by_team(cls, team_id):
-        games = cls.games_by_team(team_id)
-        games_won = []
-        for game in games:
-            if game.winner() == team_id:
-                games_won.append(game)
-        return games_won
 
     def teams(self):
         return (self.home_team, self.away_team)

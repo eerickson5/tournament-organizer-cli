@@ -63,6 +63,55 @@ class Team:
         rows = CURSOR.execute(sql, (f"%{name}%",)).fetchall()
         if rows:
             return [cls.instance_from_row(row) for row in rows]
+        
+    def games(self):
+        from models.game import Game
+        sql = """
+        SELECT * FROM games
+        WHERE home_team = ?
+        OR away_team = ?
+        """
+        rows = CURSOR.execute(sql, (self.id, self.id)).fetchall()
+        return[Game.instance_from_row(row) for row in rows]
+    
+    def games_won(self):
+        games = self.games()
+        games_won = []
+        for game in games:
+            if game.winner() == self.id:
+                games_won.append(game)
+        return games_won
+    
+    def home_games(self):
+        from models.game import Game
+        sql = """
+        SELECT * FROM games
+        WHERE home_team = ?
+        """
+        rows = CURSOR.execute(sql, (self.id, self.id)).fetchall()
+        return[Game.instance_from_row(row) for row in rows]
+    
+    def away_games(self):
+        from models.game import Game
+        sql = """
+        SELECT * FROM games
+        OR away_team = ?
+        """
+        rows = CURSOR.execute(sql, (self.id, self.id)).fetchall()
+        return[Game.instance_from_row(row) for row in rows]
+        
+    def tournaments(self):
+        from models.game import Game
+        from models.tournament import Tournament
+        games = Game.games_by_team(self.id)
+        tournaments = []
+
+        for game in games:
+            if game.tournament_id not in tournaments:
+                tournaments.append(game.tournament_id)
+                
+        return [Tournament.find_by_id(tournament) for tournament in tournaments]
+        
     
     @classmethod
     def teams_at_tournament(cls, tournament_id):

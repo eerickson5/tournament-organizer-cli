@@ -7,6 +7,7 @@ class Tournament:
     def __init__(self, name):
         self.name = name
 
+    #get rid of this
     def __repr__(self):
         return f"Tournament:(id={self.id}, name={self.name})"
 

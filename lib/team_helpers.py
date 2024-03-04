@@ -20,10 +20,11 @@ def team_editor_menu():
     else:
         print("Invalid Option")
 
+#get all teams
 def team_explorer():
     print(" ===== Team Explorer ===== ")
     print("0. Back to Main Menu")
-    print("1. Search Team by ID")
+    print("1. Search Team by ID") #no id on the user side
     print("2. Search Team(s) by Name")
     print("3. Get Games Played by a Team")
     print("4. Get Games Won by a Team")
