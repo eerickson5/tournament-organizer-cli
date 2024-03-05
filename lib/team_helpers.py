@@ -1,6 +1,5 @@
 # lib/team_helpers.py
 from models.team import Team
-from models.game import Game
 
 def team_editor_menu():
     print(" ===== Team Menu ===== ")
@@ -20,32 +19,14 @@ def team_editor_menu():
     else:
         print("Invalid Option")
 
-#get all teams
-def team_explorer():
-    print(" ===== Team Explorer ===== ")
-    print("0. Back to Main Menu")
-    print("1. Search Team by ID") #no id on the user side
-    print("2. Search Team(s) by Name")
-    print("3. Get Games Played by a Team")
-    print("4. Get Games Won by a Team")
-    print("5. Get Home Games by a Team")
-    print("6. Get Away Games by a Team")
-    print("7. Get Tournaments Played by a Team")
-    menu = {
-        "0": go_back,
-        "1": get_team_from_id,
-        "2": get_teams_from_name,
-        "3": get_games_from_team_id,
-        "4": get_games_won_from_team_id,
-        "5": get_home_games_from_team_id,
-        "6": get_away_games_from_team_id,
-    }
-    choice = input("> ")
-    function = menu.get(choice)
-    if choice:
-        function()
-    else:
-        print("Invalid Option")
+def get_all_teams():
+    teams = Team.display_all_teams()
+    for team in teams:
+        record = team.record()
+        print(f"{team.name} {record[0]}-{record[1]}-{record[2]}")
+    if not teams:
+        print("No teams exist yet.")
+    go_back()
 
 def add_team():
     name = input("Team Name > ")
@@ -57,7 +38,7 @@ def add_team():
 
 def rename_team():
     id = input("ID of Team to Rename > ")
-    if team := validate_team_from_id(id):
+    if team := validate_team_id(id):
         try:
             team.name = input("New Team Name > ")
             team.save()

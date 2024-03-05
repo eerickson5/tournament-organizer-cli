@@ -2,6 +2,7 @@
 import fire
 from seed import seed_database
 from tournament_helpers import view_all_tournaments, find_tournament
+from team_helpers import get_all_teams
 
 from helpers import (
     exit_program
@@ -14,6 +15,7 @@ def main():
             "0": exit_program,
             "1": view_all_tournaments,
             "2": find_tournament,
+            "4": get_all_teams
         }
         choice = input("> ")
         function = menu.get(choice)

@@ -82,6 +82,21 @@ class Team:
                 games_won.append(game)
         return games_won
     
+    def record(self):
+        games = self.games()
+        wins = 0
+        losses = 0
+        ties = 0
+        for game in games:
+            winner = game.winner()
+            if winner == self.id:
+                wins += 1
+            elif winner == None:
+                ties += 1
+            else:
+                losses += 1
+        return((wins, losses, ties))
+    
     def home_games(self):
         from models.game import Game
         sql = """
