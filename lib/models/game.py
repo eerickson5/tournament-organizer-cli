@@ -16,9 +16,9 @@ class Game:
         home_team = Team.find_by_id(self.home_team)
         away_team = Team.find_by_id(self.away_team)
         if self.home_score:
-            return(f"{home_team.name} {self.home_score} vs {self.away_score} {away_team.name} \n")
+            return(f"{home_team.name} {self.home_score} vs {self.away_score} {away_team.name}")
         else:
-            return(f"{self.home_team.name} vs {self.away_team.name}\n")
+            return(f"{self.home_team.name} vs {self.away_team.name}")
         
     @classmethod
     def create_table(cls):
@@ -107,6 +107,16 @@ class Game:
             return self.away_team
         else: 
             return None
+
+    @classmethod
+    def find_game_by_tournament_and_teams(cls, tournament_id, team_1_id, team_2_id):
+        sql = """
+        SELECT * FROM games
+        WHERE tournament_id = ?
+        AND ((home_team = ? AND away_team = ?) OR (home_team = ? AND away_team = ?))
+        """
+        rows = CURSOR.execute(sql, (tournament_id, team_1_id, team_2_id, team_2_id, team_1_id)).fetchall()
+        return[cls.instance_from_row(row) for row in rows]
 
     def tournament(self):
         from models.tournament import Tournament

@@ -1,8 +1,6 @@
 # lib/cli.py
 import fire
-from team_helpers import team_editor_menu, team_explorer
 from seed import seed_database
-from game_helpers import change_game_score
 from tournament_helpers import view_all_tournaments, find_tournament
 
 from helpers import (
@@ -16,7 +14,6 @@ def main():
             "0": exit_program,
             "1": view_all_tournaments,
             "2": find_tournament,
-            "3": change_game_score
         }
         choice = input("> ")
         function = menu.get(choice)
