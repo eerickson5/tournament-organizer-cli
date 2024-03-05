@@ -14,6 +14,8 @@ def edit_team_menu(team):
         "1": get_all_games,
         "2": get_all_tournaments,
         "3": get_record,
+        "4": rename_team,
+        "X": delete_team
     }
     choice = input("> ")
     function = menu.get(choice)
@@ -85,15 +87,17 @@ def get_record(team):
     print(f"\n{team.to_string()}\n")
     edit_team_menu(team)
 
-def rename_team():
-    id = input("ID of Team to Rename > ")
-    if team := validate_team_id(id):
-        try:
-            team.name = input("New Team Name > ")
-            team.save()
-            print(f"... Success! Team renamed to {team.name}")
-        except TypeError:
-            print("... Failed. Invalid Team Name.")
+def rename_team(team):
+    name = input("New Team Name > ")
+    while len(name) < 3:
+        print("Name must be longer than 2 characters.")
+        name = input("New Team Name or input 0 to exit > ")
+        if name == "0":
+            return
+    team.name = name
+    team.save()
+    print(f"Success! Team renamed to {team.name}")
+    edit_team_menu(team)
 
 def get_teams_from_name():
     name = input("Name to Search > ")
@@ -102,5 +106,21 @@ def get_teams_from_name():
     else:
         print(f"... No teams with name {name} exist.")
 
+def delete_team(team):
+    print("Are you sure you want to delete this team and all games it played?")
+    choice = input("Input y to delete and any other key to cancel > ")
+    if choice == "y":
+        games = team.games()
+        for game in games:
+            game.delete_game()
+        team.delete_team()
+        print(f"{team.name} deleted.")
+    else:
+        edit_team_menu(team)
+    go_back()
+
 def go_back(team):
+    print("...")
+
+def go_back():
     print("...")

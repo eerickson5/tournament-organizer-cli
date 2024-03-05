@@ -103,7 +103,7 @@ def find_team(type):
             return teams[choice - 1]
 
 def delete_tournament(tournament):
-    print("Are you sure you want to delete this tournament and all its data?")
+    print("Are you sure you want to delete this tournament and all its games?")
     choice = input("Input y to delete and any other key to cancel > ")
     if choice == "y":
         games = tournament.games()
