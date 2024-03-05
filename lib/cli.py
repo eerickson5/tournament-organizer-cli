@@ -19,9 +19,9 @@ def main():
         }
         choice = input("> ")
         function = menu.get(choice)
-        if choice:
+        try:
             function()
-        else:
+        except:
             print("Invalid Option")
 
 

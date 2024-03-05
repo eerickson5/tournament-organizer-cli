@@ -42,9 +42,9 @@ def edit_tournament_menu(tournament):
         }
     choice = input("> ")
     function = menu.get(choice)
-    if choice:
+    try:
         function(tournament)
-    else:
+    except:
         print("Invalid Option")
 
 def view_all_games(tournament):
