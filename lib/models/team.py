@@ -118,7 +118,7 @@ class Team:
     def tournaments(self):
         from models.game import Game
         from models.tournament import Tournament
-        games = Game.games_by_team(self.id)
+        games = self.games()
         tournaments = []
 
         for game in games:

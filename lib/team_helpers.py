@@ -5,14 +5,15 @@ def edit_team_menu(team):
     print(f" ===== Team Menu - {team.name} ===== ")
     print("0. Back to Main Menu")
     print("1. View All Games")
-    print("2. View Record")
-    print("3. View All Wins")
+    print("2. View All Tournaments")
+    print("3. View Record")
     print("4. Rename Team")
     print("X. Delete Team")
     menu = {
         "0": go_back,
         "1": get_all_games,
-        "2": rename_team
+        "2": get_all_tournaments,
+        "3": get_record,
     }
     choice = input("> ")
     function = menu.get(choice)
@@ -66,9 +67,23 @@ def find_team():
 
 def get_all_games(team):
     games = team.games()
-    print(f"All games played by {team.name}:")
+    print(f"\nAll games played by {team.name}:")
     for game in games:
         print(game.toString())
+    print(f"\n")
+    edit_team_menu(team)
+
+def get_all_tournaments(team):
+    tournaments = team.tournaments()
+    print(f"\nTournaments:")
+    for tournament in tournaments:
+        print(tournament.name)
+    print(f"\n")
+    edit_team_menu(team)
+
+def get_record(team):
+    print(f"\n{team.to_string()}\n")
+    edit_team_menu(team)
 
 def rename_team():
     id = input("ID of Team to Rename > ")
