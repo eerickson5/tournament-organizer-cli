@@ -59,8 +59,8 @@ def find_team():
             print(f"{counter}: {team.to_string()}")
             counter += 1
         choice = input("Choose a team to view or enter 0 to return to main menu > ")
-        if choice == 0:
-            go_back(team)
+        if choice == "0":
+            go_back(None)
         else:
             edit_team_menu(teams[int(choice) - 1])
 
@@ -87,5 +87,5 @@ def get_teams_from_name():
     else:
         print(f"... No teams with name {name} exist.")
 
-def go_back():
+def go_back(team):
     print("...")

@@ -22,7 +22,10 @@ def find_tournament():
             print(f"{counter}: {tourn.name} - {len(tourn.games())} Games")
             counter += 1
         choice = input("Choose a tournament to edit or enter 0 to return to main menu > ")
-        edit_tournament_menu(tournaments[int(choice) - 1])
+        if choice == "0":
+            go_back(None)
+        else:
+            edit_tournament_menu(tournaments[int(choice) - 1])
 
 def edit_tournament_menu(tournament):
     print(f"\n===== Tournament Menu - {tournament.name} ======")
