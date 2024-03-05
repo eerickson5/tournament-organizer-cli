@@ -16,9 +16,9 @@ def game_menu(game):
         }
     choice = input("> ")
     function = menu.get(choice)
-    if choice:
+    try:
         function(game)
-    else:
+    except:
         print("Invalid Option")
 
 def get_winner(game):

@@ -44,7 +44,7 @@ def edit_tournament_menu(tournament):
     function = menu.get(choice)
     try:
         function(tournament)
-    except:
+    except TypeError:
         print("Invalid Option")
 
 def view_all_games(tournament):
@@ -99,18 +99,6 @@ def find_team(type):
         else:
             return teams[choice - 1]
 
-# def input_score(type):
-#     score = input(f"{type} team score > ")
-#     try:
-#         score = int(score)
-#         if score >= 0:
-#             return score
-#         else:
-#             raise Exception
-#     except:
-#         print("Try again.  Scores must be non-negative integers.")
-#         return input_score(type)
-
 def delete_tournament(tournament):
     print("Are you sure you want to delete this tournament and all its data?")
     choice = input("Input y to delete and any other key to cancel > ")
@@ -149,6 +137,18 @@ def find_game(tournament):
         else:
             game_menu(games[choice - 1])
             edit_tournament_menu(tournament)
+
+def create_tournament():
+    name = input("New Tournament Name > ")
+    while len(name) < 3:
+        print("Name must be longer than 2 characters.")
+        name = input("New Tournament Name or input 0 to exit > ")
+        if name == "0":
+            return
+    tournament = Tournament.create_tournament(name)
+    print(f"\nTournament Created: {tournament.name}\n")
+    edit_tournament_menu(tournament)
+
 
 
 def go_back(tournament):

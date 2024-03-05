@@ -16,6 +16,7 @@ def seed_database():
     ozone = Team.create_team("Ozone")
     emory = Team.create_team("Emory Luna")
     wreck = Team.create_team("Tech Wreck")
+    breck = Team.create_team("Tech Breck")
 
     tournament = Tournament.create_tournament("Round Robin")
     other_tourn = Tournament.create_tournament("Round Circle")

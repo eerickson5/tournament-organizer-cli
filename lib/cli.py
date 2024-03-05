@@ -1,8 +1,8 @@
 # lib/cli.py
 import fire
 from seed import seed_database
-from tournament_helpers import view_all_tournaments, find_tournament
-from team_helpers import get_all_teams
+from tournament_helpers import view_all_tournaments, find_tournament, create_tournament
+from team_helpers import get_all_teams, create_team, find_team
 
 from helpers import (
     exit_program
@@ -15,14 +15,17 @@ def main():
             "0": exit_program,
             "1": view_all_tournaments,
             "2": find_tournament,
-            "4": get_all_teams
+            "3": create_tournament,
+            "4": get_all_teams,
+            "5": find_team,
+            "6": create_team
         }
         choice = input("> ")
         function = menu.get(choice)
-        try:
-            function()
-        except:
-            print("Invalid Option")
+        # try:
+        function()
+        # except TypeError:
+        #     print("Invalid Option")
 
 
 def print_menu():

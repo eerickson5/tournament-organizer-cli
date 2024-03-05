@@ -127,6 +127,10 @@ class Team:
                 
         return [Tournament.find_by_id(tournament) for tournament in tournaments]
 
+    def to_string(self):
+        record = self.record()
+        return(f"{self.name} {record[0]}-{record[1]}-{record[2]}")
+
     @classmethod
     def display_all_teams(cls):
         sql = """
