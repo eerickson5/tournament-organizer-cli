@@ -3,7 +3,7 @@
 from models.game import Game
 
 def game_menu(game):
-    print(f"\n===== Game Menu - {game.toString()} ======")
+    print(f"\n===== Game Menu - {game.to_string()} ======")
     print("0. Go Back to Tournament Menu")
     print("1. Change Game Score")
     print("2. Get Game Winner")

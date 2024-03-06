@@ -11,14 +11,14 @@ class Game:
             self.tournament_id = tournament_id
 
     
-    def toString(self):
+    def to_string(self):
         from models.team import Team
         home_team = Team.find_by_id(self.home_team)
         away_team = Team.find_by_id(self.away_team)
-        if self.home_score:
+        if self.home_score != None:
             return(f"{home_team.name} {self.home_score} vs {self.away_score} {away_team.name}")
         else:
-            return(f"{self.home_team.name} vs {self.away_team.name}")
+            return(f"{home_team.name} vs {away_team.name}")
         
     @classmethod
     def create_table(cls):

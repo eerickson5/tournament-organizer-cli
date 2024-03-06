@@ -71,7 +71,7 @@ def get_all_games(team):
     games = team.games()
     print(f"\nAll games played by {team.name}:")
     for game in games:
-        print(game.toString())
+        print(game.to_string())
     print(f"\n")
     edit_team_menu(team)
 

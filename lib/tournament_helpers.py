@@ -54,7 +54,7 @@ def view_all_games(tournament):
     games = tournament.games()
     print(f"\nGames in {tournament.name}:\n")
     for game in games:
-        print(game.toString() + f"\n")
+        print(game.to_string() + f"\n")
     edit_tournament_menu(tournament)
 
 def view_all_teams(tournament):
@@ -69,13 +69,19 @@ def add_game(tournament):
     from game_helpers import input_score
     home_team = find_team("Home")
     away_team = find_team("Away")
+    teams_are_the_same = home_team.id == away_team.id
+    while teams_are_the_same:
+        print("Oops! A team can't play against itself!  Try again with 2 different teams.")
+        home_team = find_team("Home")
+        away_team = find_team("Away")
+        teams_are_the_same = home_team.id == away_team.id
     home_score = input_score(home_team.name)
     away_score = input_score(away_team.name)
     game = Game.create_game(home_team.id, away_team.id)
     game.add_scores(home_score, away_score)
     game.add_to_tournament(tournament.id)
     print("New game created!")
-    print(f"{game.toString()}\n")
+    print(f"{game.to_string()}\n")
     edit_tournament_menu(tournament)
 
 def find_team(type):
@@ -130,7 +136,7 @@ def find_game(tournament):
         print(f"Multiple games exist between these teams during this tournament.")
         counter = 1
         for game in games:
-            print(f"{counter}: {game.toString()}\n")
+            print(f"{counter}: {game.to_string()}\n")
             counter += 1
         choice = input("Select game or 0 to exit > ")
         while choice >= counter:
