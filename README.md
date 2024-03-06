@@ -28,38 +28,18 @@ Take a look at the directory structure:
     └── helpers.py
 ```
 
+Access to the CLI main menu exists in cli.py.  An exit helper method is in helpers.py.  The main menu leads to either the tournament menu, which is in tournament_helpers.py or the team menu, which is in team_helpers.  The tournament menu may lead to a game menu, which is in game_helpers.  All the helper functions for these menus exist in these 3 files.
+
+seed.py holds some code for populating the SQL database with starter data.
+
+In the models folder, team.py holds the Team class and all its methods.  The same goes for tournament.py and game.py and the Tournament and Game classes respectively.  Each class has getter and setter methods, as well as some calculated properties and relational methods for interacting with the other classes.
+
 ---
 
 ## Running the CLI
 
 The CLI script exists in lib/cli.py.
 Run `python lib/cli.py` in your terminal to open and run the Tournament Organizer interface, then follow the instructions.
-
-
-### What Goes into a README?
-
-This README serves as a template. Replace the contents of this file to describe
-the important files in your project and describe what they do. Each Python file
-that you edit should get at least a paragraph, and each function should be
-described with a sentence or two.
-
-Describe your actual CLI script first, and with a good level of detail. The rest
-should be ordered by importance to the user. (Probably functions next, then
-models.)
-
-Screenshots and links to resources that you used throughout are also useful to
-users and collaborators, but a little more syntactically complicated. Only add
-these in if you're feeling comfortable with Markdown.
-
----
-
-## Conclusion
-
-A lot of work goes into a good CLI, but it all relies on concepts that you've
-practiced quite a bit by now. Hopefully this template and guide will get you off
-to a good start with your Phase 3 Project.
-
-Happy coding!
 
 ---
 
@@ -68,6 +48,3 @@ Happy coding!
 - Pip
 - SQL
 
-## Resources
-
-- [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
